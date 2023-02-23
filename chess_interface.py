@@ -52,23 +52,47 @@ def choice(list_of_moves):
     return random.choice(list_of_moves)
 
 
-def best_move_1a():
+def best_move_1a(): ## best move just one half move ahead
     all_moves_eval = []
-    save_before_play = Board.copy()
-    for try_move in legal_moves(): #### loop all move and look for the best eval after one move
-        do_move(try_move)
-        all_moves_eval.append([try_move, Board.evaluate()])
+
+    for try_move in list(Board.legal_moves):  #### loop all move and look for the best eval after one move
+        # make the move
+        Board.push(try_move)
+        # evaluate the board
+        Board.evaluate()
+        # add the move and the evaluation to the list
+        all_moves_eval.append((try_move, Board.eval))
+        # undo the move
+        Board.pop()
+
+    print(all_moves_eval)
+
+    # sort the list by the evaluation
+    all_moves_eval.sort(key=lambda x: x[1], reverse=True)
+    print(all_moves_eval)
+    print (all_moves_eval[0][0])
+    print (all_moves_eval[0][1])
+    return all_moves_eval[0][0]
+
 
 Board = Board()
 
 
 def game():
+    white_brain = "best_move_1a"
+    black_brain = "random"
     while not Board.is_game_over():
+        #       if Board.turn() ## check if it's white turn (True) or black turn (False)
+
         print(Board)
         Board.evaluate()
         print(Board.eval)
         possible_moves = legal_moves()
         print(possible_moves)
-        coup = choice(possible_moves)
-        print(coup)
-        do_move(coup)
+        if Board.turn:  ## check if it's white turn (True) or black turn (False)
+            best_move = best_move_1a()
+            do_move(best_move)
+        else:
+            coup = choice(possible_moves)
+            print(coup)
+            do_move(coup)
