@@ -11,13 +11,13 @@ def game(partie):  # partie = chess.Board()
     white_brain = "best_move_1a"
     black_brain = "random"
     while not partie.is_game_over():
+        print(partie.fen())
 
         #       if Board.turn() ## check if it's white turn (True) or black turn (False)
         print("global game")
         print(partie)
-        time.sleep(2)
         if partie.turn:  ## check if it's white turn (True) or black turn (False)
-            local_game = evaluate.Local_Board_1a(partie)
+            local_game = evaluate.Local_Board_2a(partie)
 
             print("White to play")
             print(local_game)
