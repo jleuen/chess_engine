@@ -56,6 +56,7 @@ class Local_Board_random(chess.Board):  # sub classs which copy a chess.Board() 
         random.shuffle(all_moves_eval)
         self.ordered_moves = all_moves_eval
 
+
 class Local_Board_1a(chess.Board):  # sub classs which copy a chess.Board() object
     def __init__(self, board):
         super().__init__()
@@ -165,28 +166,21 @@ class Local_Board_2a(chess.Board):  # sub classs which copy a chess.Board() obje
                 # undo the move
                 self.pop()
 
-
             # sort the list by the evaluation
             opponent_move.sort(key=lambda x: x[1], reverse=False)
 
             # add the move and the evaluation to the list
             all_moves_eval.append((try_move, opponent_move[0][1]))
 
-
             # undo the move
             self.pop()
 
         # detect the best move
 
-
-
-
-
         # sort the list by the evaluation
         all_moves_eval.sort(key=lambda x: x[1], reverse=True)
         print(list(all_moves_eval))
         self.ordered_moves = list(all_moves_eval)
-
 
 
 ### Ajout de la recherche a une profondeure de 5 coups (boucle pour pouvoir en faire plus)
@@ -199,7 +193,7 @@ class Local_Board_5a(chess.Board):  # sub classs which copy a chess.Board() obje
         self.eval = 0
         self.ordered_moves = []
         self.evaluate()
-        self.best_move()
+        self.best_move_rec(4)
 
     def evaluate(self):
         piece_values = {
@@ -245,24 +239,54 @@ class Local_Board_5a(chess.Board):  # sub classs which copy a chess.Board() obje
                 # undo the move
                 self.pop()
 
-
             # sort the list by the evaluation
             opponent_move.sort(key=lambda x: x[1], reverse=False)
 
             # add the move and the evaluation to the list
             all_moves_eval.append((try_move, opponent_move[0][1]))
 
-
             # undo the move
             self.pop()
 
         # detect the best move
 
-
-
-
-
         # sort the list by the evaluation
         all_moves_eval.sort(key=lambda x: x[1], reverse=True)
         print(list(all_moves_eval))
         self.ordered_moves = list(all_moves_eval)
+
+    def best_move_rec(self, depth):
+        if depth == 0:
+            # if we've reached the maximum depth of recursion,
+            # just evaluate the current board and return the result
+            self.evaluate()
+            return self.eval
+
+        # initialize the list of possible moves and their evaluations
+        possible_moves_eval = []
+
+        # loop over all legal moves
+        for try_move in self.legal_moves:
+            # make the move
+            self.push(try_move)
+
+            # recursively evaluate the opponent's best response
+            opponent_eval = self.best_move_rec(depth - 1)
+
+            # evaluate the current state of the board after the opponent's move
+            self.evaluate()
+
+            # calculate the total evaluation for this move by subtracting
+            # the opponent's evaluation from our own
+            total_eval = self.eval
+
+            # add this move and its total evaluation to the list
+            possible_moves_eval.append([try_move, total_eval])
+
+            # undo the move
+            self.pop()
+
+        # choose the best move based on its total evaluation
+        #sort list by evaluation
+        possible_moves_eval.sort(key=lambda x: x[1], reverse=True)
+        self.ordered_moves = list(possible_moves_eval)
