@@ -21,12 +21,13 @@ def game(partie):  # partie = chess.Board()
 
             print("White to play")
             print(local_game)
+            print(local_game.ordered_moves)
             best_move = local_game.ordered_moves[0][0]
             print("best move is", best_move)
             partie.push(best_move)
 
         else:
-            local_game = evaluate.Local_Board_1a(partie)
+            local_game = evaluate.Local_Board_random(partie)
             print("black to play")
             print(local_game)
             best_move = local_game.ordered_moves[0][0]
