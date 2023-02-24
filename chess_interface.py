@@ -27,7 +27,7 @@ def game(partie):  # partie = chess.Board()
             partie.push(best_move)
 
         else:
-            local_game = evaluate.Local_Board_2a(partie)
+            local_game = evaluate.Local_Board_5b(partie)
             print("black to play")
             print(local_game)
             best_move = local_game.ordered_moves[0][0]
