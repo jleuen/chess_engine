@@ -1,5 +1,5 @@
 import random
-
+import time
 import chess
 
 
@@ -255,7 +255,7 @@ class Local_Board_5a(chess.Board):  # sub classs which copy a chess.Board() obje
         print(list(all_moves_eval))
         self.ordered_moves = list(all_moves_eval)
 
-    def best_move_rec(self, depth):
+    def best_move_rec(self, depth, alpha=-float('inf'), beta=float('inf')):
         if depth == 0:
             # if we've reached the maximum depth of recursion,
             # just evaluate the current board and return the result
@@ -273,6 +273,8 @@ class Local_Board_5a(chess.Board):  # sub classs which copy a chess.Board() obje
             # recursively evaluate the opponent's best response
             opponent_eval = self.best_move_rec(depth - 1)
 
+            opponent_eval = self.best_move_rec(depth - 1, alpha, beta)
+
             # evaluate the current state of the board after the opponent's move
             self.evaluate()
 
@@ -285,6 +287,16 @@ class Local_Board_5a(chess.Board):  # sub classs which copy a chess.Board() obje
 
             # undo the move
             self.pop()
+
+            if self.turn == chess.WHITE:
+                alpha = max(alpha, total_eval)
+            else:
+                beta = min(beta, total_eval)
+
+                # check if we can prune the rest of the moves
+            if alpha >= beta:
+
+                break
 
         # choose the best move based on its total evaluation
         #sort list by evaluation
