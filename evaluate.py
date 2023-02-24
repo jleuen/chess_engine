@@ -10,9 +10,11 @@ class Local_Board_1a(chess.Board): # sub classs which copy a chess.Board() objec
         self.eval = 0
         self.ordered_moves = []
         self.evaluate()
+        print(f"it's {self.turn}'s turn")
+        print(self.legal_moves)
         self.best_move()
 
-        print(f"it's {self.turn}'s turn")
+
 
     def evaluate(self):
         piece_values = {
@@ -41,6 +43,7 @@ class Local_Board_1a(chess.Board): # sub classs which copy a chess.Board() objec
     def best_move(self):  ## best move just one half move ahead
         all_moves_eval = []
         for try_move in self.legal_moves:
+            print(try_move)
             # make the move
             self.push(try_move)
             # evaluate the board

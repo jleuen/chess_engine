@@ -1,4 +1,6 @@
 # interface du jeux d'échec
+import time
+
 import evaluate
 
 import chess
@@ -13,6 +15,7 @@ def game(partie):  # partie = chess.Board()
         #       if Board.turn() ## check if it's white turn (True) or black turn (False)
         print("global game")
         print(partie)
+        time.sleep(2)
         if partie.turn:  ## check if it's white turn (True) or black turn (False)
             local_game = evaluate.Local_Board_1a(partie)
 
