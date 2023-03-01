@@ -18,18 +18,22 @@ def game(partie):  # partie = chess.Board()
         print(partie.turn)
         print(partie)
         if partie.turn:  ## check if it's white turn (True) or black turn (False)
-            local_game = evaluate.Local_Board_6c(partie)
+            start = time.time()
+            local_game = evaluate.Local_Board_7c(partie)
 
             print("White to play")
             best_move = local_game.best_move[0]
             print("best move is", best_move)
             partie.push(best_move)
+            print("time to play :", time.time() - start)
 
         else:
-            local_game = evaluate.Local_Board_5c(partie)
+            start = time.time()
+            local_game = evaluate.Local_Board_7c(partie)
             print("black to play")
-            best_move = local_game.ordered_moves[0][0]
+            best_move = local_game.best_move[0]
             print("best move is", best_move)
             partie.push(best_move)
+            print("time to play :", time.time() - start)
 
         print("eval is", local_game.eval)
