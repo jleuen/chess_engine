@@ -40,19 +40,30 @@ def game(partie):  # partie = chess.Board()
 
 
 def an_other_game(partie):
+
+    white_player = evaluate.Local_Player_1a(partie, True)
+    black_player = evaluate.Local_Player_1a(partie, False)
+    print(partie)
     while not partie.is_game_over():
-        white_player = evaluate.Local_Player_1a(partie, "white")
-        black_player = evaluate.Local_Player_1a(partie, "black")
 
         if partie.turn:  ## check if it's white turn (True) or black turn (False)
             print("White to play")
             white_player.update(partie)
-            white_player.best_move()
+            white_player.evaluate()
+            print(white_player.eval)
+            white_player.choose_best_move()
             best_move = white_player.best_move[0]
-            print("best move is", best_move)
             partie.push(best_move)
+            print(partie)
         else:
             print("black to play")
+            black_player.update(partie)
+            black_player.evaluate()
+            print(black_player.eval)
+            black_player.choose_best_move()
             best_move = black_player.best_move[0]
-            print("best move is", best_move)
             partie.push(best_move)
+            print(partie)
+
+
+

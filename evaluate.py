@@ -1259,13 +1259,16 @@ class Local_Player_1a(chess.Board):  # add time management
         self.eval = 0
         self.ordered_moves = []
         self.evaluate()
-        self.best_move = 0
+        self.best_move = ""
+        self.color = color
 
     def update(self, board):
-        self.set_board_fen(board.fen())
+        self.set_fen(board.fen())
 
-    def best_move(self):
-        self.best_move = self.best_move_using_minmax(max_time=15, is_max_player=self.turn)
+    def choose_best_move(self):
+        print("test")
+        self.best_move = self.best_move_using_minmax(max_time=2, is_max_player=self.color)
+        print(self.best_move)
 
     def evaluate(self):
         piece_values = {
@@ -1426,7 +1429,7 @@ class Local_Player_1a(chess.Board):  # add time management
             for legal_move in self.legal_moves:
                 move = chess.Move.from_uci(str(legal_move))
                 self.push(move)
-                move_score, nodes_per_depth = self.minmax(depth, depth, True, alpha=-float('inf'), beta=float('inf'),
+                move_score, nodes_per_depth = self.minmax(depth, depth, self.color, alpha=-float('inf'), beta=float('inf'),
                                                           nodes_per_depth=nodes_per_depth)
                 score = max(best_move_score, move_score)
                 self.pop()
