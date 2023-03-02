@@ -63,6 +63,7 @@ client.bots.make_move(game_id, "e7e5")
 client.bots.make_move(game_id, "b8c6")
 client.bots.make_move(game_id,"e5d4")
 client.bots.make_move(game_id,"f8c5")
+client.bots.make_move(game_id,"d8f6")
 
 event = client.bots.stream_game_state(game_id):
 opponent_move=event["state"]["moves"][-4:]

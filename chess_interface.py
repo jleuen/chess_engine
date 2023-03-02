@@ -40,7 +40,6 @@ def game(partie):  # partie = chess.Board()
 
 
 def an_other_game(partie):
-
     white_player = evaluate.Local_Player_1a(partie, True)
     black_player = evaluate.Local_Player_1a(partie, False)
     print(partie)
@@ -66,4 +65,74 @@ def an_other_game(partie):
             print(partie)
 
 
+def play_again_human(partie):  # bot always play white
+    white_player = evaluate.Local_Player_1b(partie, False)
+    print(partie)
+    while not partie.is_game_over():
+        if partie.turn:
+            print("White to play")
+            white_player.update(partie)
+            white_player.evaluate()
+            print(white_player.eval)
+            white_player.choose_best_move()
+            best_move = white_player.best_move[0]
+            print(best_move)
+            partie.push(best_move)
+            print(partie)
+        else:
+            print("black to play")
+            print("enter your move (ex: e2e4)")
+            move = input()
+            print(move)
+            partie.push_san(move)
+            print(partie)
 
+
+def play_again_human_black(partie):  # bot always play black
+    white_player = evaluate.Local_Player_1b(partie, True)
+    print(partie)
+    while not partie.is_game_over():
+        if partie.turn:
+            print("white to play")
+            print("enter your move (ex: e2e4)")
+            move = input()
+            print(move)
+            partie.push_san(move)
+            print(partie)
+
+        else:
+            print("Black to play")
+            white_player.update(partie)
+            white_player.evaluate()
+            print(white_player.eval)
+            white_player.choose_best_move()
+            best_move = white_player.best_move[0]
+            print(best_move)
+            partie.push(best_move)
+            print(partie)
+
+def play_to_increase_depth(partie):
+    white_player = evaluate.Local_Player_1b(partie, False)
+    black_player = evaluate.Local_Player_1b(partie, True)
+    print(partie)
+    while not partie.is_game_over():
+        if partie.turn:
+            print("White to play")
+            white_player.update(partie)
+            white_player.evaluate()
+            print(white_player.eval)
+            white_player.choose_best_move()
+            best_move = white_player.best_move[0]
+            print(best_move)
+            partie.push(best_move)
+            print(partie)
+        else:
+            print("black to play")
+            black_player.update(partie)
+            black_player.evaluate()
+            print(black_player.eval)
+            black_player.choose_best_move()
+            best_move = black_player.best_move[0]
+            print(best_move)
+            partie.push(best_move)
+            print(partie)
